@@ -29,7 +29,7 @@ const Users = () => {
 					<div key={user.userId}>
 						<h2>{user.name}</h2>
 						<p>{user.email}</p>
-						<Link to={`/user/${user.userId}`}>
+						<Link to='/user'>
 							<button>View User Info</button>
 						</Link>
 						<button onClick={() => deleteUser(user.userId, setUsers)}>

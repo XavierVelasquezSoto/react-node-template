@@ -89,7 +89,7 @@ userRoutes.patch("/:id", (req, res) => {
         return res.send("Error al escribir el archivo");
       }
 
-      return res.json(usersUpdated);
+      return res.json(userToUpdated);
     });
   });
 });
