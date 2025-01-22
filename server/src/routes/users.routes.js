@@ -58,6 +58,42 @@ userRoutes.post("/", (req, res) => {
   });
 });
 
+userRoutes.patch("/:id", (req, res) => {
+  const id = req.params.id;
+  const newUserInfo = req.body;
+
+  fs.readFile(usersFile, (error, data) => {
+    if (error) {
+      return res.send("Error al leer el archivo");
+    }
+
+    const dataJson = JSON.parse(data);
+
+    let userToUpdated = dataJson.find((user) => user.userId === id);
+    if (!userToUpdated) {
+      return res.send("Usuario no encontrado");
+    }
+
+    userToUpdated = { ...userToUpdated, ...newUserInfo };
+
+    const usersUpdated = dataJson.map((user) => {
+      if (user.userId === id) {
+        user = userToUpdated;
+      }
+
+      return user;
+    });
+
+    fs.writeFile(usersFile, JSON.stringify(usersUpdated), (error) => {
+      if (error) {
+        return res.send("Error al escribir el archivo");
+      }
+
+      return res.json(usersUpdated);
+    });
+  });
+});
+
 userRoutes.delete("/:id", (req, res) => {
   const id = req.params.id;
 
